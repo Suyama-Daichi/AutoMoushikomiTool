@@ -26,18 +26,21 @@ maisu = 2
 # いつでもよいを選択するか(Trueならいつでもよい)
 itsudemoOK = True
 
+# ログインしたいユーザーの会員番号を設定
 memberIds = [
-    "00886551"
+    "00886551",
+    "00886549",
     ]
+# 今は同一パスワードのみ対応
 password = ["luna1213"]
 
 
 
-for memberId in memberIds:
-    # 1.操作するブラウザを開く
-    driver = webdriver.Chrome('chromedriver.exe')
+# 操作するブラウザを開く
+driver = webdriver.Chrome('chromedriver.exe')
 
-    # 2.操作するページを開く
+for memberId in memberIds:
+    # ログインページを開く
     driver.get('https://www.fc-member.johnnys-net.jp/login/index/f/JI')
 
     # ログインIDを入力する
@@ -62,7 +65,7 @@ for memberId in memberIds:
         # 第一希望を選択する
         Select(driver.find_element_by_id("request1")).select_by_value(koenNo)
 
-        # 第四希望を選択する()
+        # 第四希望を選択する(いつでもよいかのやつ)
         Select(driver.find_element_by_id("request4")).select_by_index(1 if itsudemoOK else 2)
 
         # 次へボタンをクリック
@@ -80,7 +83,7 @@ for memberId in memberIds:
         # 申し込むボタンをクリック
         driver.find_element_by_xpath(
             "//*/section/form/div[2]/div[1]/button").click()
-
-        time.sleep(2)
+    else:
+        driver.get("https://www.fc-member.johnnys-net.jp/logout/")
 else:
     print("申し込み完了！")
