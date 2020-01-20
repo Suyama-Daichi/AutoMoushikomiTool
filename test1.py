@@ -4,6 +4,9 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 import time
 
+# 申し込みたい公演の申し込みURL
+koenUrl = "https://www.fc-member.johnnys-net.jp/performance/applicant/id/562"
+
 # 公演No(ここに申し込みたい公演の番号を設定)
 koenNos = [
     "04101T", 
@@ -20,8 +23,15 @@ koenNos = [
     ]
 # 枚数
 maisu = 2
-# いつでもよいを選択するか
+# いつでもよいを選択するか(Trueならいつでもよい)
 itsudemoOK = True
+
+
+
+
+
+
+
 
 # 1.操作するブラウザを開く
 driver = webdriver.Chrome('chromedriver.exe')
@@ -40,7 +50,7 @@ driver.find_element_by_xpath("//*/section/form/div[2]/div/button").click()
 
 for koenNo in koenNos:
     # 指定の公演の申し込みページを開く
-    driver.get("https://www.fc-member.johnnys-net.jp/performance/applicant/id/562")
+    driver.get(koenUrl)
 
     # チェックボックスにチェックを入れる
     driver.find_element_by_class_name("checkbox").click()
