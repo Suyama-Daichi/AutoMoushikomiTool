@@ -2,8 +2,12 @@
 from selenium import webdriver
 # Selectタグを操作できるモジュール
 from selenium.webdriver.support.ui import Select
-
 import time
+
+# 公演No(ここに申し込みたい公演の番号を設定)
+koenNos = ["04101T","04111T","04112T"]
+# 枚数
+maisu = 2
 
 # 1.操作するブラウザを開く
 # /Users/Kenta/Desktop/Selenium/chromedriver
@@ -23,29 +27,36 @@ driver.find_element_by_id("password").send_keys("luna1213")
 # ログインボタンをクリックする
 driver.find_element_by_xpath("//*/section/form/div[2]/div/button").click()
 
-# 指定の公演の申し込みページを開く
-driver.get("https://www.fc-member.johnnys-net.jp/performance/applicant/id/565")
+for koenNo in koenNos:
+    # 指定の公演の申し込みページを開く
+    driver.get("https://www.fc-member.johnnys-net.jp/performance/applicant/id/562")
 
-# チェックボックスにチェックを入れる
-driver.find_element_by_class_name("checkbox").click()
+    # チェックボックスにチェックを入れる
+    driver.find_element_by_class_name("checkbox").click()
 
-# 申し込み本ページに遷移する
-driver.find_element_by_id("applicant-link").click()
+    # 申し込み本ページに遷移する
+    driver.find_element_by_id("applicant-link").click()
 
-# 第一希望を選択する
-Select(driver.find_element_by_id("request1")).select_by_value("05312J")
+    # 第一希望を選択する
+    Select(driver.find_element_by_id("request1")).select_by_value(koenNo)
 
-# 第四希望を選択する()
-Select(driver.find_element_by_id("request4")).select_by_index(2)
+    # 第四希望を選択する()
+    Select(driver.find_element_by_id("request4")).select_by_index(2)
 
-# 次へボタンをクリック
-driver.find_element_by_xpath("//*/section/form/div[2]/div/button").click()
+    # 次へボタンをクリック
+    driver.find_element_by_xpath("//*/section/form/div[2]/div/button").click()
 
-# チケット枚数を選択
-Select(driver.find_element_by_id("qty")).select_by_index(2)
+    # チケット枚数を選択
+    Select(driver.find_element_by_id("qty")).select_by_index(maisu)
 
-# 次へボタンをクリック
-driver.find_element_by_xpath("//*/section/form/div[2]/div[1]/button").click()
+    # 次へボタンをクリック
+    driver.find_element_by_xpath("//*/section/form/div[2]/div[1]/button").click()
 
-# 申し込むボタンをクリック
-driver.find_element_by_xpath("//*/section/form/div[2]/div[1]/button").click()
+    time.sleep(2)
+
+    # 申し込むボタンをクリック
+    driver.find_element_by_xpath("//*/section/form/div[2]/div[1]/button").click()
+
+    time.sleep(2)
+else:
+    print("申し込み完了！")
