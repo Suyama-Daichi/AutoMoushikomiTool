@@ -5,18 +5,29 @@ from selenium.webdriver.support.ui import Select
 import time
 
 # 公演No(ここに申し込みたい公演の番号を設定)
-koenNos = ["04101T","04111T","04112T"]
+koenNos = [
+    "04101T", 
+    "04111T", 
+    "04112T", 
+    "04151T", 
+    "04161T",
+    "04162T",
+    "04171T",
+    "04172T",
+    "04181T",
+    "04182T",
+    "04191T",
+    ]
 # 枚数
 maisu = 2
+# いつでもよいを選択するか
+itsudemoOK = True
 
 # 1.操作するブラウザを開く
-# /Users/Kenta/Desktop/Selenium/chromedriver
 driver = webdriver.Chrome('chromedriver.exe')
 
 # 2.操作するページを開く
 driver.get('https://www.fc-member.johnnys-net.jp/login/index/f/JI')
-
-# 基本設定はここまで。↑は使い回し可能。ここから下は、やりたい動作によって増える
 
 # ログインIDを入力する
 driver.find_element_by_id("member_id").send_keys("00886551")
@@ -41,7 +52,7 @@ for koenNo in koenNos:
     Select(driver.find_element_by_id("request1")).select_by_value(koenNo)
 
     # 第四希望を選択する()
-    Select(driver.find_element_by_id("request4")).select_by_index(2)
+    Select(driver.find_element_by_id("request4")).select_by_index(1 if itsudemoOK else 2)
 
     # 次へボタンをクリック
     driver.find_element_by_xpath("//*/section/form/div[2]/div/button").click()
@@ -50,12 +61,14 @@ for koenNo in koenNos:
     Select(driver.find_element_by_id("qty")).select_by_index(maisu)
 
     # 次へボタンをクリック
-    driver.find_element_by_xpath("//*/section/form/div[2]/div[1]/button").click()
+    driver.find_element_by_xpath(
+        "//*/section/form/div[2]/div[1]/button").click()
 
     time.sleep(2)
 
     # 申し込むボタンをクリック
-    driver.find_element_by_xpath("//*/section/form/div[2]/div[1]/button").click()
+    driver.find_element_by_xpath(
+        "//*/section/form/div[2]/div[1]/button").click()
 
     time.sleep(2)
 else:
