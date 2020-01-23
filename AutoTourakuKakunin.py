@@ -54,7 +54,9 @@ for memberId in memberIds:
         # driver.get("https://www.fc-member.johnnys-net.jp/logout/")
 else:
     print("当落が出ました")
+    print(F"会員番号:{memberId}")
+    if tousenList != []:    
+        for tousen in tousenList:
+            print(F"当選！{tousen}")
     for rakusen in rakusenList:
         print(F"落選！{rakusen}")
-    for tousen in tousenList:
-        print(F"当選！{tousen}")
