@@ -7,19 +7,16 @@ import time
 # 当落を確認したい公演の申し込み確認URL
 koenUrl = "https://www.fc-member.johnnys-net.jp/performance/status/id/559"
 
-# ログインしたいユーザーの会員番号を設定
-memberIds = [
-    "00886551",
-    "00886549",
+# # ログインしたいユーザーの会員番号とパスワードと名前を設定
+loginInfo = [
+    {'memberId': '00886551', 'password': 'luna1213', 'name': 'suyama'},
+    {'memberId': '00886549', 'password': 'luna1213', 'name': 'yamaken'}
     ]
-# 今は同一パスワードのみ対応
-password = ["luna1213"]
-
 
 # 操作するブラウザを開く
 driver = webdriver.Chrome('chromedriver.exe')
 
-for memberId in memberIds:
+for member in loginInfo:
     # 落選整理番号
     rakusenList = []
     # 当選整理番号
@@ -29,10 +26,10 @@ for memberId in memberIds:
     driver.get('https://www.fc-member.johnnys-net.jp/login/index/f/JI')
 
     # ログインIDを入力する
-    driver.find_element_by_id("member_id").send_keys(memberId)
+    driver.find_element_by_id("member_id").send_keys(member.get("memberId"))
 
     # パスワードを入力する
-    driver.find_element_by_id("password").send_keys(password[0])
+    driver.find_element_by_id("password").send_keys(member.get("password"))
 
     # ログインボタンをクリックする
     driver.find_element_by_xpath("//*/section/form/div[2]/div/button").click()
@@ -41,8 +38,10 @@ for memberId in memberIds:
     driver.get(koenUrl)
 
     for index, target in enumerate(driver.find_elements_by_class_name("round-button")):
-        driver.find_element_by_xpath(F"//*/section[2]/div[{index + 1}]/div[2]/a").click()
-        seiribango = driver.find_element_by_css_selector("#main > section:nth-child(4) > div > div.block-title > h4").text
+        driver.find_element_by_xpath(
+            F"//*/section[2]/div[{index + 1}]/div[2]/a").click()
+        seiribango = driver.find_element_by_css_selector(
+            "#main > section:nth-child(4) > div > div.block-title > h4").text
         for result in driver.find_elements_by_class_name("tourText"):
             if "落選" in result.text:
                 rakusenList.append(seiribango)
@@ -52,10 +51,10 @@ for memberId in memberIds:
             driver.get(koenUrl)
     else:
         driver.get("https://www.fc-member.johnnys-net.jp/logout/")
-
-    print(F"会員番号:{memberId}の当落が出ました")
-    if tousenList != []:    
-        for tousen in tousenList:
-            print(F"当選！{tousen}")
-    for rakusen in rakusenList:
-        print(F"落選！{rakusen}")
+        name = member.get("name")
+        print(F"{name}の当落が出ました")
+        if tousenList != []:
+            for tousen in tousenList:
+                print(F"当選！{tousen}")
+        for rakusen in rakusenList:
+            print(F"落選！{rakusen}")
