@@ -10,20 +10,21 @@ koenUrl = "https://www.fc-member.johnnys-net.jp/performance/status/id/559"
 # ログインしたいユーザーの会員番号を設定
 memberIds = [
     "00886551",
-    # "00886549",
+    "00886549",
     ]
 # 今は同一パスワードのみ対応
 password = ["luna1213"]
 
-# 落選整理番号
-rakusenList = []
-# 当選整理番号
-tousenList = []
 
 # 操作するブラウザを開く
 driver = webdriver.Chrome('chromedriver.exe')
 
 for memberId in memberIds:
+    # 落選整理番号
+    rakusenList = []
+    # 当選整理番号
+    tousenList = []
+
     # ログインページを開く
     driver.get('https://www.fc-member.johnnys-net.jp/login/index/f/JI')
 
@@ -49,12 +50,10 @@ for memberId in memberIds:
                 tousenList.append(seiribango)
         else:
             driver.get(koenUrl)
-        
-    # else:
-        # driver.get("https://www.fc-member.johnnys-net.jp/logout/")
-else:
-    print("当落が出ました")
-    print(F"会員番号:{memberId}")
+    else:
+        driver.get("https://www.fc-member.johnnys-net.jp/logout/")
+
+    print(F"会員番号:{memberId}の当落が出ました")
     if tousenList != []:    
         for tousen in tousenList:
             print(F"当選！{tousen}")
