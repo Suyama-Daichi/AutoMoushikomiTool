@@ -28,11 +28,10 @@ itsudemoOK = True
 
 # ログインしたいユーザーの会員番号を設定
 memberIds = [
-    "00886551",
-    "00886549",
+    "00000000"
     ]
 # 今は同一パスワードのみ対応
-password = ["luna1213"]
+password = ["AnyPassword"]
 
 
 
