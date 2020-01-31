@@ -5,12 +5,11 @@ from selenium.webdriver.support.ui import Select
 import time
 
 # 当落を確認したい公演の申し込み確認URL
-koenUrl = "https://www.fc-member.johnnys-net.jp/performance/status/id/559"
+koenUrl = "https://www.fc-member.johnnys-net.jp/performance/status/id/565"
 
 # # ログインしたいユーザーの会員番号とパスワードと名前を設定
 loginInfo = [
-    {'memberId': '00886551', 'password': 'luna1213', 'name': 'suyama'},
-    {'memberId': '00886549', 'password': 'luna1213', 'name': 'yamaken'}
+    {'memberId': '00000000', 'password': 'AnyPassword', 'name': 'AnyName'}
     ]
 
 # 操作するブラウザを開く
