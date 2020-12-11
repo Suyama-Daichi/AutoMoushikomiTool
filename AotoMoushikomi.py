@@ -5,22 +5,27 @@ from selenium.webdriver.support.ui import Select
 import time
 
 # 申し込みたい公演の申し込みURL
-koenUrl = "https://www.fc-member.johnnys-net.jp/performance/applicant/id/562"
+koenUrl = "https://www.fc-member.johnnys-net.jp/performance/applicant/id/709"
 
 # 公演No(ここに申し込みたい公演の番号を設定)
 koenNos = [
-    "04101T", 
-    "04111T", 
-    "04112T", 
-    "04151T", 
-    "04161T",
-    "04162T",
-    "04171T",
-    "04172T",
-    "04181T",
-    "04182T",
-    "04191T",
-    ]
+    "01281J",
+    "01282J",
+    "02022J",
+    "02031J",
+    "02032J",
+    "02041J",
+    "02042J",
+    "02172J",
+    "02181J",
+    "02182J",
+    "02222J",
+    "02231J",
+    "02232J",
+    "03252J",
+    "03261J",
+    "03262J"
+]
 # 枚数
 maisu = 2
 # いつでもよいを選択するか(Trueならいつでもよい)
@@ -28,15 +33,13 @@ itsudemoOK = True
 
 # ログインしたいユーザーの会員番号を設定
 memberIds = [
-    "00000000"
-    ]
+    "00886551"
+]
 # 今は同一パスワードのみ対応
-password = ["AnyPassword"]
-
-
+password = ["luna1213"]
 
 # 操作するブラウザを開く
-driver = webdriver.Chrome('chromedriver.exe')
+driver = webdriver.Chrome()
 
 for memberId in memberIds:
     # ログインページを開く
@@ -72,8 +75,10 @@ for memberId in memberIds:
         # 第一希望を選択する
         Select(driver.find_element_by_id("request1")).select_by_value(koenNo)
 
-        # 第四希望を選択する(いつでもよいかのやつ)
-        Select(driver.find_element_by_id("request4")).select_by_index(1 if itsudemoOK else 2)
+        if itsudemoOK:
+            # 第四希望を選択する(いつでもよいかのやつ)
+            Select(driver.find_element_by_id("request4")
+                   ).select_by_index(1 if itsudemoOK else 2)
 
         # 次へボタンをクリック
         driver.find_element_by_xpath(
