@@ -42,21 +42,29 @@ for memberId in memberIds:
     # ログインページを開く
     driver.get('https://www.fc-member.johnnys-net.jp/login/index/f/JI')
 
+    driver.implicitly_wait(1)
+
     # ログインIDを入力する
-    driver.find_element_by_id("member_id").send_keys(memberId)
+    driver.find_element_by_id("capture_signIn_customerId").send_keys(memberId)
 
     # パスワードを入力する
-    driver.find_element_by_id("password").send_keys(password[0])
+    driver.find_element_by_id(
+        "capture_signIn_currentPassword").send_keys(password[0])
 
     # ログインボタンをクリックする
-    driver.find_element_by_xpath("//*/section/form/div[2]/div/button").click()
+    driver.find_element_by_xpath(
+        "//*[@id='capture_signIn_signInForm']/div[2]/div/div/button").click()
+
+    time.sleep(2)
 
     for koenNo in koenNos:
         # 指定の公演の申し込みページを開く
         driver.get(koenUrl)
 
         # チェックボックスにチェックを入れる
-        driver.find_element_by_class_name("checkbox").click()
+        clist = driver.find_elements_by_class_name("checkbox")
+        for c in clist:
+            c.click()
 
         # 申し込み本ページに遷移する
         driver.find_element_by_id("applicant-link").click()
@@ -68,7 +76,8 @@ for memberId in memberIds:
         Select(driver.find_element_by_id("request4")).select_by_index(1 if itsudemoOK else 2)
 
         # 次へボタンをクリック
-        driver.find_element_by_xpath("//*/section/form/div[2]/div/button").click()
+        driver.find_element_by_xpath(
+            "//*/section/form/div[2]/div/button").click()
 
         # チケット枚数を選択
         Select(driver.find_element_by_id("qty")).select_by_index(maisu)
